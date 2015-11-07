@@ -106,31 +106,61 @@
 
 
     <div class="container">
+<form method="POST" action="signUp.php" id="form">
+<h2>Register for URSocial!</h2>
 
+<label>First Name :</label>
+<input type="text" name="fname" id="fname" /><br/>
+<label>Last Name :</label>
+<input type="text" name="lname" id="lname" /><br/>
+<label>Age :</label>
+<input type="text" name="age" id="age" /><br/>
+<label>SchoolID :</label>
+<input type="text" name="sID" id="sID" /><br/>
+<label>LocationID :</label>
+<input type="text" name="lID" id="lID" /><br/>
+<span><input type="radio" name="method" value="post">Accept Terms and get Social!</span><br/>
+<input type="submit" name="submit" id="submit" value="Submit">
+</form>
 <p>PHP happens here</p>
-<?php echo "Hellow world";
-
-?>
 <?php
+if(isset($_POST['fname']))
+{
+echo "<h2>php block entgerred</h2>";
 
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
-$myServer = "GARRETTSURFACE";
-$myUser = "sa";
-$myPass = "Ralphie08";
-$myDB="URSocial";
-console.log("Starting connection");
-$dbhandle = sqlsrv_connect($myServer, $myUser, $myPass) or die("Couldn't connect: ");
+$fname = $_POST['fname'];
+$lname = $_POST['lname'];
+$age = $_POST['age'];
+$sID = $_POST['sID'];
+$lID = $_POST['lID'];
+echo "<span class='success'>Form Submitted By <b>POST METHOD</b></span><br/>";
+echo "First Name : ".$fname."<br/>Last Name : ".$lname."<br/>Age :".$age."<br/>School ID :".$sID."<br/>LocID :".$lID;
 
-$selected = mssql_select_db($myDB, $dbhandle) or die("Couldn't find db");
-console.log("Got through connection");
-$numStudents = mssql_query('SELECT COUNT(*) from Students');
-console.log("Got here");
-echo $numStudents;
+$serverName = "GARRETTSURFACE"; //serverName\instanceName
+$connectionInfo = array( "Database"=>"URSocial", "UID"=>"sa", "PWD"=>"Ralphie08");
+$conn = sqlsrv_connect( $serverName, $connectionInfo);
 
-mysql_close($dbhandle);
+if( $conn ) {
+     echo "Connection established.<br />";
+}else{
+     echo "Connection could not be established.<br />";
+     die( print_r( sqlsrv_errors(), true));
+}
 
+$sql = "INSERT INTO Students (firstname,lastname,age,schoolID,locationID) VALUES ('Jimmy','Smith',20,1,1)";
+$stmt = sqlsrv_query($conn, $sql, $params);
+if( $stmt === false ) {
+     die( print_r( sqlsrv_errors(), true));
+}
+
+$sql = "INSERT INTO Students (firstname,lastname,age,schoolID,locationID) VALUES ('$fname','$lname',$age,$sID,$lID)";
+$stmt = sqlsrv_query( $conn, $sql, $params);
+echo $stmt;
+}
 ?>
+
+
+
 
 <p>End of php</p>
 

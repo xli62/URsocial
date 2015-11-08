@@ -74,7 +74,7 @@
 
           </button>
 
-          <a class="navbar-brand" href="#">UR Socail</a>
+          <a class="navbar-brand" href="#">UR Social</a>
 
         </div>
 
@@ -106,8 +106,11 @@
 
 
     <div class="container">
+	
+	<div class="fieldset">
 <form method="POST" action="signUp.php" id="form">
-<h2>Register for URSocial!</h2>
+<div class="fieldsetheader">Register for URSocial!</div>
+<br/>
 
 <label>First Name :</label>
 <input type="text" name="fname" id="fname" /><br/>
@@ -115,6 +118,8 @@
 <input type="text" name="lname" id="lname" /><br/>
 <label>Age :</label>
 <input type="text" name="age" id="age" /><br/>
+<label>Email<label>
+<input type="text" name="email" id="email" /><br/>
 <label>SchoolID :</label>
 <input type="text" name="sID" id="sID" /><br/>
 <label>LocationID :</label>
@@ -122,47 +127,59 @@
 <span><input type="radio" name="method" value="post">Accept Terms and get Social!</span><br/>
 <input type="submit" name="submit" id="submit" value="Submit">
 </form>
-<p>PHP happens here</p>
+
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 if(isset($_POST['fname']))
 {
-echo "<h2>php block entgerred</h2>";
+
 
 $fname = $_POST['fname'];
 $lname = $_POST['lname'];
 $age = $_POST['age'];
+$email = $_POST['email'];
 $sID = $_POST['sID'];
 $lID = $_POST['lID'];
-echo "<span class='success'>Form Submitted By <b>POST METHOD</b></span><br/>";
-echo "First Name : ".$fname."<br/>Last Name : ".$lname."<br/>Age :".$age."<br/>School ID :".$sID."<br/>LocID :".$lID;
 
 $serverName = "GARRETTSURFACE"; //serverName\instanceName
 $connectionInfo = array( "Database"=>"URSocial", "UID"=>"sa", "PWD"=>"Ralphie08");
 $conn = sqlsrv_connect( $serverName, $connectionInfo);
 
 if( $conn ) {
-     echo "Connection established.<br />";
 }else{
-     echo "Connection could not be established.<br />";
+     echo "Connection could not be established.<br /> Please contact the sweet administrative crew.";
      die( print_r( sqlsrv_errors(), true));
 }
 
-$sql = "INSERT INTO Students (firstname,lastname,age,schoolID,locationID) VALUES ('Jimmy','Smith',20,1,1)";
-$stmt = sqlsrv_query($conn, $sql, $params);
-if( $stmt === false ) {
-     die( print_r( sqlsrv_errors(), true));
-}
-
-$sql = "INSERT INTO Students (firstname,lastname,age,schoolID,locationID) VALUES ('$fname','$lname',$age,$sID,$lID)";
+$sql = "INSERT INTO Students (firstname,lastname,email,age,schoolID,locationID) VALUES ('$fname','$lname','$email',$age,$sID,1)";
 $stmt = sqlsrv_query( $conn, $sql, $params);
+
+$sql2 = "SELECT * FROM STUDENTS WHERE email = $email";
+$stmt = sqlsrv_query($conn,$sql2,$params);
 echo $stmt;
+
+echo "Welcome ".$fname."! Your account has been successfully created";
+
 }
 ?>
 
+<div>Cookie Name here:<div id="cookiename"></div></div>
+Welcome <div id="firstname1" style="display: none;"><?php echo $_POST["fname"]; ?></div><br>
 
 
+<script>
 
-<p>End of php</p>
+console.log("JS block: setting LocalStorage Object displaynameCookie from info thats in the html block firstname1");
+localStorage.setItem("displaynameCookie", document.getElementById("firstname1").innerHTML);
+console.log(localStorage.getItem("displaynameCookie"))
+
+document.getElementById("cookiename").innerHTML=localStorage.getItem("displaynameCookie"); 
+
+</script>
+</div>
 
       <footer>
 

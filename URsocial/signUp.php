@@ -42,8 +42,6 @@
 
         <link rel="stylesheet" href="css/main.css">
 
-
-
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 
     </head>
@@ -56,54 +54,7 @@
 
         <![endif]-->
 
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-
-      <div class="container">
-
-        <div class="navbar-header">
-
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-
-            <span class="sr-only">Toggle navigation</span>
-
-            <span class="icon-bar"></span>
-
-            <span class="icon-bar"></span>
-
-            <span class="icon-bar"></span>
-
-          </button>
-
-          <a class="navbar-brand" href="#">UR Social</a>
-
-        </div>
-
-        <div id="navbar" class="navbar-collapse collapse">
-
-          <form class="navbar-form navbar-right" role="form">
-
-            <div class="form-group">
-
-              <input type="text" placeholder="Email" class="form-control">
-
-            </div>
-
-            <div class="form-group">
-
-              <input type="password" placeholder="Password" class="form-control">
-
-            </div>
-
-            <button type="submit" class="btn btn-success">Sign in</button>
-
-          </form>
-
-        </div><!--/.navbar-collapse -->
-
-      </div>
-
-    </nav>
-
+<?php include "inc/nav.inc"; ?>
 
     <div class="container">
 	
@@ -163,27 +114,31 @@ echo $stmt;
 
 echo "Welcome ".$fname."! Your account has been successfully created";
 
+$cookie_name = 'phpCookieName';
+$cookie_value = $fname;
+setcookie($cookie_name, $cookie_value, time() + (86400 * 30), '/');
+
 }
 ?>
 
 <div>Cookie Name here:<div id="cookiename"></div></div>
 Welcome <div id="firstname1" style="display: none;"><?php echo $_POST["fname"]; ?></div><br>
-
+<div>Other cookie name:<div id="othercookiename"></div></div>
 
 <script>
-
 console.log("JS block: setting LocalStorage Object displaynameCookie from info thats in the html block firstname1");
 localStorage.setItem("displaynameCookie", document.getElementById("firstname1").innerHTML);
-console.log(localStorage.getItem("displaynameCookie"))
 
-document.getElementById("cookiename").innerHTML=localStorage.getItem("displaynameCookie"); 
+document.getElementById("othercookiename").innerHTML=localStorage.getItem("displaynameCookie");
 
+localStorage.Cookie = "Stupid Cookie";
 </script>
+
 </div>
 
       <footer>
 
-        <p>&copy; Company 2015</p>
+        <p>&copy; URsocial 2015</p>
 
       </footer>
 

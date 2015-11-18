@@ -50,87 +50,148 @@
 
     <body>
 
-        <!--[if lt IE 8]>
+<?php include "inc/nav.inc" ?>
 
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        
 
-        <![endif]-->
+				<div id="chartdiv" style="width: 100%; height: 600px;"></div>
+          <h1 class="page-header">Dashboard</h1>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-
-      <div class="container">
-
-        <div class="navbar-header">
-
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-
-            <span class="sr-only">Toggle navigation</span>
-
-            <span class="icon-bar"></span>
-
-            <span class="icon-bar"></span>
-
-            <span class="icon-bar"></span>
-
-          </button>
-
-          <a class="navbar-brand" href="#">UR Socail</a>
-
-        </div>
-
-        <div id="navbar" class="navbar-collapse collapse">
-
-          <form class="navbar-form navbar-right" role="form">
-
-            <div class="form-group">
-
-              <input type="text" placeholder="Email" class="form-control">
-
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
             </div>
-
-            <div class="form-group">
-
-              <input type="password" placeholder="Password" class="form-control">
-
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
             </div>
-
-            <button type="submit" class="btn btn-success">Sign in</button>
-
-          </form>
-
-        </div><!--/.navbar-collapse -->
-
-      </div>
-
-    </nav>
-
-
-    <div class="container">
-
-<ul class="nav nav-pills">
-  <li role="presentation" class="active"><a href="#">Activity</a></li>
-  <li role="presentation"><a href="#">My Activity</a></li>
-  <li role="presentation"><a href="#">My Info</a></li>
-</ul>
-
-
-      <hr>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+          </div>
 
 
 
-      <footer>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="../../assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+	
+	<script src="amcharts/amcharts/amcharts.js" type="text/javascript"></script>
+        <script src="amcharts/amcharts/pie.js" type="text/javascript"></script>
 
-        <p>&copy; Company 2015</p>
+        
+		
+		<?php
+		$serverName = "GARRETTSURFACE"; //serverName\instanceName
+		$connectionInfo = array( "Database"=>"URSocial", "UID"=>"sa", "PWD"=>"Ralphie08");
+		$conn = sqlsrv_connect( $serverName, $connectionInfo);
 
-      </footer>
+		if( $conn ) {
+		}else{
+     		echo "Connection could not be established.<br /> Please contact the sweet administrative crew.";
+     		die( print_r( sqlsrv_errors(), true));
+		}
+		
+		$locations = array("1","2","3","4","5","6","7","8");
+		$locationValues = array();
+        foreach($locations as $value){
+		$sql1 = "SELECT COUNT(*) FROM STUDENTS WHERE locationID= $value";
+		$stmt = sqlsrv_query($conn,$sql1,$params);
+		
+		if( sqlsrv_fetch( $stmt ) === false) {
+     		die( print_r( sqlsrv_errors(), true));
+		}
+		
+		$name = sqlsrv_get_field( $stmt, 0);
+		$locationValues[]=$name;
 
-    </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		}	
+		
+		$a= $locationValues[0];
+		$b= $locationValues[1];
+		$c= $locationValues[2];
+		$d= $locationValues[3];
+		$e= $locationValues[4];
+		$f= $locationValues[5];
+		$g= $locationValues[6];
+		$h= $locationValues[7];
+		
+		
+		echo "<script>
+            var chart;
+            var legend;
 
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+            var chartData = [
+                {
+                    \"country\": \"Mex\",
+                    \"value\": $a,
+                },
+                {
+                    \"country\": \"Daily\",
+                    \"value\": $b,
+                },
+				                {
+                    \"country\": \"Gleason\",
+                    \"value\": $c,
+                },
+				                {
+                    \"country\": \"PRR\",
+                    \"value\": $d,
+                },
+				                {
+                    \"country\": \"Stacks\",
+                    \"value\": $e,
+                },
+				                {
+                    \"country\": \"Off-Campus\",
+                    \"value\": $f,
+                },
+				                {
+                    \"country\": \"One\",
+                    \"value\": $g,
+                },
+				                {
+                    \"country\": \"Pearl\",
+                    \"value\": $h,
+                }
+            ];
 
-        <script src="js/vendor/bootstrap.min.js"></script>
+            AmCharts.ready(function () {
+                // PIE CHART
+                chart = new AmCharts.AmPieChart();
+                chart.dataProvider = chartData;
+                chart.titleField = \"country\";
+                chart.valueField = \"value\";
+                chart.outlineColor = \"black\";
+                chart.outlineAlpha = 0.8;
+                chart.outlineThickness = 2;
+                chart.balloonText = \"[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>\";
+                chart.depth3D = 15;
+                chart.angle = 30;
 
-        <script src="js/main.js"></script>
+                // WRITE
+                chart.write(\"chartdiv\");
+            });
+        </script>";
+		?>
+		
+		
 
     </body>
 

@@ -27,37 +27,14 @@
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">UR Socail</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </nav>
+<?php include "inc/nav.inc"; ?>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
         <h1>Get Social!</h1>
         <p>Connect and interact with your student body at popular social locations off campus! UR Social allows you to see how your student body is spending its time on Social nights.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+        <p><a class="btn btn-primary btn-lg" href="signUp.php" role="button">Register Now &raquo;</a></p>
       </div>
     </div>
 
@@ -72,7 +49,7 @@
         <div class="col-md-4">
           <h2>Student Body Activity</h2>
           <p>UR Social gives you the ability to see how your fellow students are spending the night; rather it be in the library, bars, or simply off campus. </p>
-          <p><a class="btn btn-default" href="#" role="button">See Student Body &raquo;</a></p>
+          <p><a class="btn btn-default" href="dashboard.php" role="button">See Student Body &raquo;</a></p>
        </div>
         <div class="col-md-4">
           <h2>Check-in</h2>
@@ -82,7 +59,12 @@
       </div>
 
       <hr>
+<div>Other cookie name:<div id="othercookiename"></div></div>
 
+
+<script>
+document.getElementById("othercookiename").innerHTML=localStorage.getItem("displaynameCookie");
+</script>
       <footer>
         <p>&copy; Company 2015</p>
       </footer>

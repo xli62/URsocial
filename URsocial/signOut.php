@@ -84,35 +84,6 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-if(isset($_POST['fname']))
-{
-
-
-$fname = $_POST['fname'];
-$lname = $_POST['lname'];
-$age = $_POST['age'];
-$email = $_POST['email'];
-$sID = $_POST['sID'];
-$lID = $_POST['lID'];
-
-$serverName = "GARRETTSURFACE"; //serverName\instanceName
-$connectionInfo = array( "Database"=>"URSocial", "UID"=>"sa", "PWD"=>"Ralphie08");
-$conn = sqlsrv_connect( $serverName, $connectionInfo);
-
-if( $conn ) {
-}else{
-     echo "Connection could not be established.<br /> Please contact the sweet administrative crew.";
-     die( print_r( sqlsrv_errors(), true));
-}
-
-$sql = "INSERT INTO Students (firstname,lastname,email,age,schoolID,locationID) VALUES ('$fname','$lname','$email',$age,$sID,1)";
-$stmt = sqlsrv_query( $conn, $sql, $params);
-
-$sql2 = "SELECT * FROM STUDENTS WHERE email = $email";
-$stmt = sqlsrv_query($conn,$sql2,$params);
-echo $stmt;
-
-echo "Welcome ".$fname."! Your account has been successfully created";
 
 $cookie_name = 'phpCookieName';
 $cookie_value = $fname;
@@ -121,20 +92,11 @@ setcookie($cookie_name, $cookie_value, time() + (86400 * 30), '/');
 }
 ?>
 
-
-
 <script>
 function signOut() {
-	console.log("Inside SignOut function");
     var cookie_name = 'phpCookieName';
 	delete_cookie(cookie_name);
 }
-
-function delete_cookie(name){
-	console.log("inside delete function");
-	document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-}
-
 </script>
 
 </div>

@@ -1,3 +1,50 @@
+
+<?php
+echo "WE ARE in the THE POST EMAIL LOOP Block but not inside the loop";
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+if(isset($_POST['EmailLogin']))
+{
+
+echo "WE ARE INSIDE THE POST EMAIL LOOP";
+
+$emailLog = $_POST['EmailLogin'];
+
+$serverName = "GARRETTSURFACE"; //serverName\instanceName
+$connectionInfo = array( "Database"=>"URSocial", "UID"=>"sa", "PWD"=>"Ralphie08");
+$conn = sqlsrv_connect( $serverName, $connectionInfo);
+
+if( $conn ) {
+}else{
+     echo "Connection could not be established.<br /> Please contact the sweet administrative crew.";
+     die( print_r( sqlsrv_errors(), true));
+}
+
+
+$sql = "SELECT firstname FROM STUDENTS WHERE email = '$emailLog'";
+$stmt = sqlsrv_query($conn,$sql,$params);
+		if( sqlsrv_fetch( $stmt ) == false) {
+     		die( print_r( sqlsrv_errors(), true));
+		}
+		echo "STATEMENT STATEMENT STATEMENT STATEMENT";
+		echo $stmt;
+		
+		$name = sqlsrv_get_field($stmt, 0);
+
+		echo "NAME NAME NAME NAME";
+		echo $name;
+$cookie_name = 'phpCookieName';
+$cookie_value = $name;
+$_COOKIE['phpCookieName'] = $name;
+
+echo "Cookie '" .$cookie_name . "'is set!<br>";
+echo "Value i: " .$_COOKIE[$cookie_name];
+
+setcookie($cookie_name, $cookie_value, time() + (86400 * 30), '/');
+}
+?>
+
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -60,6 +107,7 @@
 
       <hr>
 <div>Other cookie name:<div id="othercookiename"></div></div>
+
 
 
 <script>
